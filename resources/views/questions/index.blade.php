@@ -26,7 +26,7 @@
                                         <strong>{{$question->votes}}</strong>{{str_plural('vote',$question->votes)}}
                                     </div>
                                     <div class="status {{$question->status}}">
-                                        <strong>{{$question->answers}}</strong>{{str_plural('answer',$question->answers)}}
+                                        <strong>{{$question->answers_count}}</strong>{{str_plural('answer',$question->answers_count)}}
                                     </div>
                                     <div class="view">
                                         {{$question->views.' '.str_plural('view',$question->views)}}
@@ -38,17 +38,17 @@
                                             <a href="{{$question->url}}">{{$question->title}}</a>
                                         </h3>
                                         <div class="ml-auto">
-                                            @if(\Illuminate\Support\Facades\Auth::user()->can('update-question',$question))
+                                            @can('update-question',$question)
                                             <a href="{{route('questions.edit',$question->id)}}" class="btn btn-outline-info">Edit</a>
-                                            @endif
-                                                @if(\Illuminate\Support\Facades\Auth::user()->can('update-question',$question))
+                                            @endcan
+                                                @can('delete-question',$question)
                                             <form action="{{route('questions.destroy',$question->id)}}" method="post" class="form-delete">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="btn btn-outline-danger"
                                                    onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
-                                                    @endif
+                                                    @endcan
                                         </div>
                                     </div>
 

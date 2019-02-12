@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Gate;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth',['except'=>['index','show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -64,11 +69,8 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        if(Gate::allows('update-question',$question)){
-            return view('questions.edit',['question'=>$question]);
-        }
-        abort(403,'Access denied.');
-
+        $this->authorize('update',$question);
+        return view('questions.edit',['question'=>$question]);
     }
 
     /**
@@ -80,8 +82,11 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
-        $question->update($request->only('title','body'));
-        return redirect()->route('questions.index')->with('success','Your question has been update!');
+        if(Gate::allows('update-question',$question)) {
+            $question->update($request->only('title', 'body'));
+            return redirect()->route('questions.index')->with('success', 'Your question has been update!');
+        }
+        abort(403,'Access denied.');
     }
 
     /**
