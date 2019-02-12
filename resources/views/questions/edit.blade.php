@@ -18,8 +18,9 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{route('questions.store')}}" method="post">
-                            @include('questions._form',['btnText'=>'Ask Question'])
+                        <form action="{{route('questions.update',$question->id)}}" method="post">
+                            @method('PUT')
+                            @include('questions._form',['btnText'=>'Update Question'])
                         </form>
 
                     </div>
