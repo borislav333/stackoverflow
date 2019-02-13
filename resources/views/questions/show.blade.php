@@ -19,7 +19,22 @@
 
                     <div class="card-body">
                         <div class="media">
+                            <div class="d-flex flex-column vote-controls">
+                                <a title="This question is useful" class="vote-up">
+                                    <i class="fas fa-caret-up fa-3x"></i>
+                                </a>
+                                <span class="votes-count">1230</span>
+                                <a title="This question is not useful"  class="vote-down off">
+                                    <i class="fas fa-caret-down fa-3x"></i>
+                                </a>
+                                <a title="Click to mark as favorite question (Click again to undo)" class="favorite favorited">
+                                    <i class="fas fa-star fa-2x"></i>
+
+                                </a>
+                                <span class="favorites_count">133</span>
+                            </div>
                             <div class="media-body">
+
                                 {!! $question->body_html !!}
                                 <div class="float-right">
                                     <span class="text-muted">Answered {{$question->created_date}}</span>
@@ -49,6 +64,20 @@
                         <hr>
                         @foreach($question->answers as $answer)
                             <div class="media">
+                                <div class="d-flex flex-column vote-controls">
+                                    <a title="This question is useful" class="vote-up">
+                                        <i class="fas fa-caret-up fa-3x"></i>
+                                    </a>
+                                    <span class="votes-count">1230</span>
+                                    <a title="This question is not useful"  class="vote-down off">
+                                        <i class="fas fa-caret-down fa-3x"></i>
+                                    </a>
+                                    <a title="Click this answer to best answer.(Click again to undo)" class="vote-accepted mt-2">
+                                        <i class="fas fa-check fa-2x"></i>
+
+                                    </a>
+                                    <span class="favorites_count">133</span>
+                                </div>
                                 <div class="media-body">
                                     {!! $answer->body_html !!}
                                     <div class="float-right">
