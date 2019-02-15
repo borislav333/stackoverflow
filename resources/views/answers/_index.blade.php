@@ -17,12 +17,30 @@
                             <a title="This question is not useful"  class="vote-down off">
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
-                            <a title="Click this answer to best answer.(Click again to undo)" class="{{$answer->status}} mt-2">
+                            @can('accept',$answer)
+                            <a title="Click this answer to best answer.(Click again to undo)"
+                               class="{{$answer->status}} mt-2"
+                               onclick="event.preventDefault(); document.getElementById('accept-answer-{{$answer->id}}').submit();">
                                 <i class="fas fa-check fa-2x"></i>
 
                             </a>
+                            <form action="{{route('answers.accept',$answer->id)}}" id="accept-answer-{{$answer->id}}"
+                            style="display: none;" method="post">
+                                @csrf
+                            </form>
+                                @else
+                                    @if($answer->is_best)
+                                    <a class="{{$answer->status}} mt-2" title="The owner marked this question as best"
+                                       onclick="event.preventDefault(); document.getElementById('accept-answer-{{$answer->id}}').submit();">
+                                        <i class="fas fa-check fa-2x"></i>
+
+                                    </a>
+                                        @endif
+                            @endcan
                             <span class="favorites_count">133</span>
+
                         </div>
+
                         <div class="media-body">
                             {!! $answer->body_html !!}
                             <div class="row">
