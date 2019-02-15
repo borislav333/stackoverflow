@@ -10,13 +10,25 @@
                 @foreach($answers as $answer)
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a title="This question is useful" class="vote-up">
+                            <a title="This answer is useful" class="vote-up {{\Illuminate\Support\Facades\Auth::guest() ? 'off' : ''}}"
+                               onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{$answer->id}}').submit();">
                                 <i class="fas fa-caret-up fa-3x"></i>
                             </a>
-                            <span class="votes-count">1230</span>
-                            <a title="This question is not useful"  class="vote-down off">
+                            <form action="/answers/{{$answer->id}}/vote" id="up-vote-answer-{{$answer->id}}"
+                                  style="display: none;" method="post">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+                            <span class="votes-count">{{$answer->votes_count}}</span>
+                            <a title="This answer is not useful"  class="vote-down {{\Illuminate\Support\Facades\Auth::guest() ? 'off' : ''}}"
+                               onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{$answer->id}}').submit();">
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
+                            <form action="/answers/{{$answer->id}}/vote" id="down-vote-answer-{{$answer->id}}"
+                                  style="display: none;" method="post">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
                             @can('accept',$answer)
                             <a title="Click this answer to best answer.(Click again to undo)"
                                class="{{$answer->status}} mt-2"

@@ -50,4 +50,10 @@ class Answer extends Model
         return $this->morphToMany(User::class,'votable');
 
     }
+    public function voteQuestions(){
+        return $this->morphedByMany(Question::class,'votable');
+    }
+    public function voteAnswers(){
+        return $this->morphedByMany(Answer::class,'votable');
+    }
 }
